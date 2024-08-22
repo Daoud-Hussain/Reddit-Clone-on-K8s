@@ -1,10 +1,11 @@
-FROM node:19-alpine3.15 as builder
+FROM node:19-alpine3.15
 
-WORKDIR /reddit-clone 
+WORKDIR /reddit-clone
 
-COPY . /reddit-clone 
+COPY . /reddit-clone
 
-RUN npm install 
+# Use --legacy-peer-deps to avoid dependency conflicts
+RUN npm install --legacy-peer-deps
 
 EXPOSE 3000
 

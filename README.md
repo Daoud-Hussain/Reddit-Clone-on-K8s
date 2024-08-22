@@ -1,3 +1,7 @@
+# Redit Clone on K8s using Github Action
+
+![image](https://user-images.githubusercontent.com/89836369/228110223-2d9142d2-ff30-463e-b102-eae9a87ca06e.png)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
