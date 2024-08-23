@@ -1,38 +1,107 @@
-# Redit Clone on K8s using Github Action
+# Reddit Clone App on Kubernetes with Ingress
+This project demonstrates how to deploy a Reddit clone app on Kubernetes with Ingress and expose it to the world using Minikube as the cluster.
 
-![image](https://user-images.githubusercontent.com/89836369/228110223-2d9142d2-ff30-463e-b102-eae9a87ca06e.png)
+## Prerequisites
+Before you begin, you should have the following tools installed on your local machine: 
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+- Docker
+- Minikube cluster ( Running )
+- kubectl
+- Git
 
-## Getting Started
+You can install Prerequisites by doing these steps. [click here & complete all steps one by one]().
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
+## Installation
+Follow these steps to install and run the Reddit clone app on your local machine:
+
+1) Clone this repository to your local machine: `git clone https://github.com/Daoud-Hussain/Reddit-Clone-on-K8s.git`
+2) Navigate to the project directory: `cd reddit-clone-k8s-ingress`
+3) Build the Docker image for the Reddit clone app: `docker build -t reddit-clone-app .`
+4) Deploy the app to Kubernetes: `kubectl apply -f deployment.yaml`
+1) Deploy the Service for deployment to Kubernetes: `kubectl apply -f service.yaml`
+5) Enable Ingress by using Command: `minikube addons enable ingress`
+6) Expose the app as a Kubernetes service: `kubectl expose deployment reddit-deployment --type=NodePort --port=5000`
+7) Create an Ingress resource: `kubectl apply -f ingress.yaml`
+
+
+## Test Ingress DNS for the app:
+- Test Ingress by typing this command: `curl http://domain.com/test`
+
+## Cluster Monitoring using Prometheus & Grafana
+
+Key Components :
+
+- Prometheus server - Processes and stores metrics data
+- Alert Manager - Sends alerts to any systems/channels
+- Grafana - Visualize scraped data in UI
+
+Pre Requisites :
+- EKS Cluster is setup already
+- Install Helm
+- EC2 instance to access EKS cluster
+
+Installation Steps 
+```sh
+helm repo add stable https://charts.helm.sh/stable
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm search repo prometheus-community
+kubectl create namespace prometheus
+helm install stable prometheus-community/kube-prometheus-stack -n prometheus
+kubectl get pods -n prometheus
+kubectl get svc -n prometheus
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Edit Prometheus Service (Edit type : LoadBalancer)
+```sh
+kubectl edit svc stable-kube-prometheus-sta-prometheus -n prometheus
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Edit Grafana Service (Edit type : LoadBalancer) 
+```sh
+kubectl edit svc stable-grafana -n prometheus
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Verify if service is changed to LoadBalancer and also to get the Load Balancer URL.
+```sh
+kubectl get svc -n prometheus
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Access Grafana Dashboard
+```sh
+UserName: admin 
+Password: prom-operator
+```
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+For creating a dashboard to monitor the cluster:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+Click '+' button on left panel and select ‘Import’.
+Enter 12740 dashboard id under Grafana.com Dashboard.
+Click ‘Load’.
+Select ‘Prometheus’ as the endpoint under prometheus data sources drop down.
+Click ‘Import’.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### Images For reference
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+<img width="1396" alt="image" src="https://user-images.githubusercontent.com/110477025/227587553-7163c709-85cf-4e23-a00b-823b08758859.png">
+
+
+
+<img width="1400" alt="image" src="https://user-images.githubusercontent.com/110477025/227587788-06ce33dd-3a09-4f36-9bbd-aff0925615ed.png">
+
+
+
+
+## Contributing
+If you'd like to contribute to this project, please open an issue or submit a pull request.
+
+## Contributer
+<a href = "https://daoudhussain.netlify.app/">
+  <img src = "https://contrib.rocks/image?repo=Daoud-Hussain/Reddit-Clone-on-K8s"/>
+</a>
