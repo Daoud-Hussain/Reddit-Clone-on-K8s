@@ -28,7 +28,7 @@ Follow these steps to install and run the Reddit clone app on your local machine
 7) Create an Ingress resource: `kubectl apply -f ingress.yaml`
 
 
-## Test Ingress DNS for the app:
+## Test Ingress DNS for the app
 - Test Ingress by typing this command: `curl http://domain.com/test`
 
 ## Cluster Monitoring using Prometheus & Grafana
